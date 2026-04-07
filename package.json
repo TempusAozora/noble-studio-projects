@@ -1,0 +1,21 @@
+{
+  "name": "raspberry-pi-projects",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TempusAozora/Raspberry-pi-server.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TempusAozora/Raspberry-pi-server/issues"
+  },
+  "homepage": "https://github.com/TempusAozora/Raspberry-pi-server#readme",
+  "type": "module"
+}

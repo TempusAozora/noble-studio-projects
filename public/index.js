@@ -12,8 +12,6 @@ for (const dir of directories) {
     const li = document.createElement("li");
     const baseHref = path.split(`${dir}`)[0];
 
-    console.log(dir);
-
     li.innerHTML = `
         <a href="${baseHref}${dir}">${decodeURIComponent(dir)}</a>
     `
@@ -22,7 +20,6 @@ for (const dir of directories) {
 
 window.files.forEach(file => {
     const tr = document.createElement("tr");
-    console.log(file);
     tr.innerHTML = `
         <td>${file.isDir ? icons.folder : icons.file}<span>${file.name}</span></td>
         <td>${(new Date(file.createdAt)).toLocaleDateString('en-US')}</td>

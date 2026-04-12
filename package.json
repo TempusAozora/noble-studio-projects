@@ -17,5 +17,10 @@
     "url": "https://github.com/TempusAozora/Raspberry-pi-server/issues"
   },
   "homepage": "https://github.com/TempusAozora/Raspberry-pi-server#readme",
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "dotenv": "^17.4.1",
+    "express": "^5.2.1",
+    "pug": "^3.0.4"
+  }
 }

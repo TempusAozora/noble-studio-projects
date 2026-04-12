@@ -1,0 +1,130 @@
+@font-face {
+    font-family: "Roboto";
+    src: url(fonts/Roboto/Roboto-VariableFont_wdth\,wght.ttf);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    height: 100vh;
+    font-family: "Roboto";
+    color: #5F5F5F;
+}
+
+main {
+    background-color: #F6F5F5;
+    display: grid;
+    grid-template-columns: 18rem 1fr;
+}
+
+header, aside {
+    background-color: #EFF3F6;
+}
+
+header {
+    display: flex;
+    padding: .7rem 1.5rem;
+    color: #73B1F7;
+}
+
+header input, header button {
+    align-self: center;
+    border-radius: 15px;
+    font-family: inherit;
+    border: #C6C6C6 1px solid;
+}
+
+header input {
+    margin-left: 5rem;
+    padding: .2rem .5rem;
+    background-color: #F6F5F5;
+}
+
+header button {
+    margin-left: auto;
+    padding: .2rem 2rem;
+    background-color: inherit;
+    color: #5F5F5F;
+}
+
+main section {
+    padding: 3rem 5rem;
+    display: grid;
+    grid-template-rows: 3.5rem auto;
+}
+
+ul.breadcrumb li {
+    display: inline;
+}
+
+ul.breadcrumb li+li:before {
+    padding: 1rem;
+    color: black;
+    content: ">\00a0";
+}
+
+ul.breadcrumb li a {
+    color: inherit;
+    text-decoration: none;
+    font-size: 1.5rem;
+}
+
+.file-table {
+    width: 100%;
+    border-spacing: 0;
+    border-radius: 15px;
+    table-layout: fixed;
+}
+
+.tbody-wrapper {
+    max-height: 50vh;
+    overflow-y: auto;
+}
+
+.file-table tr td, .file-table tr th {
+    text-align: left;
+    padding: .5rem 0 .5rem 2rem;
+    overflow: hidden; /* make sure it hides the content that overflows */
+    white-space: nowrap; /* don't break the line */
+    text-overflow: ellipsis; /* give the beautiful '...' effect */
+}
+
+.file-table img {
+    height: 20px;
+    width: 20px;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+.file-table th {
+    background-color: #EBEBEB;
+    border-top: #C6C6C6 1px solid;
+}
+
+.file-table th:first-child {
+    border-left: #C6C6C6 1px solid;
+    border-top-left-radius: 15px;
+}
+
+.file-table th:last-child {
+    border-right: #C6C6C6 1px solid;
+    border-top-right-radius: 15px;
+}
+
+.file-table th, .file-table tr:not(:last-child) td {
+    border-bottom: #C6C6C6 1px solid;
+}
+
+.clickable-row {
+    cursor: pointer;
+}
+
+.clickable-row:hover {
+    background-color: color-mix(in srgb, #F6F5F5 97%, black);
+}

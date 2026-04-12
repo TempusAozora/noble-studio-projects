@@ -1,16 +1,44 @@
 import http from "http";
 import express from "express";
-
-import { fileURLToPath } from "url";
 import path from "path";
+import fs from "fs";
 
+import { getPathInfo } from "./pathInfo.js";
+import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
 const app = express();
 
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static("public"));
+app.set('view engine', 'pug');
+app.set('views', './views');
 
-app.get('/', (req, res) => {
-    res.sendFile("index.html");
+app.get('/about', (req, res) => {
+    res.redirect('/about.html');
+});
+
+
+app.use(getPathInfo, (req, res, next) => {
+    if (req.url.includes('.well-known') || req.url.includes('favicon.ico')) return next();
+
+    const files = [];
+
+    if (req.isDir && req.files) {
+        for (const file of req.files) {
+            const absPath = path.join(file.parentPath, file.name);
+            const fileStat = fs.statSync(absPath);
+            files.push({
+                name: file.name,
+                isDir: fileStat.isDirectory(),
+                size: fileStat.isDirectory() ? undefined : fileStat.size,
+                createdAt: fileStat.birthtime,
+                lastModified: fileStat.mtime,
+                owner: "Aozora pi owner"
+            });
+        }
+    }
+   
+    res.render("index", {files: files, pathExists: req.pathExists, isDir: req.isDir});
 });
 
 const server = http.createServer(app);

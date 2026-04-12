@@ -1,0 +1,44 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(
+      content="width=device-width, initial-scale=1.0" 
+      name="viewport"
+      )
+    link(
+      href="/style.css" 
+      rel="stylesheet"
+      )
+    title Aozora's Raspberry Pi
+  body
+    header
+      h2 Aozora's Raspberry Pi
+      input(
+        placeholder="Search" 
+        type="text"
+        )
+      button logout
+    main
+      aside
+      section
+        ul#dirs.breadcrumb(style="list-style: none;")
+          li
+            a(href="/") root
+        .table-wrapper#main-tbl
+          table.file-table
+            thead
+              tr
+                th Name
+                th Uploaded
+                th Modified
+                th File Size
+                th Owner
+          .tbody-wrapper
+            table.file-table
+              tbody#dir-content
+    script.
+        window.files = !{JSON.stringify(files)};
+        window.pathExists = !{pathExists};
+        window.isDir = !{isDir};
+    script(src="/index.js") 

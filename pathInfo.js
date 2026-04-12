@@ -9,7 +9,7 @@ export function getPathInfo(req, res, next) {
     const workingDirectory = decoded.replace(/^\/+/, '');
     const absPath = path.resolve(root, workingDirectory);
 
-    if (!absPath.startsWith(root)) throw new Error('Unauthorized access attempt');
+    if (!absPath.startsWith(root)) throw new Error(`Unauthorized access attempt. Attempted path: ${absPath}`);
     req.pathExists = fs.existsSync(absPath);
 
     if (req.pathExists) {

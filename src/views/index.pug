@@ -24,7 +24,7 @@ html(lang="en")
       section
         ul#dirs.breadcrumb(style="list-style: none;")
           li
-            a(href="/") root
+            a(href="/root/") root
         .table-wrapper#main-tbl
           table.file-table
             thead
@@ -34,11 +34,18 @@ html(lang="en")
                 th Modified
                 th File Size
                 th Owner
+                th
           .tbody-wrapper
             table.file-table
               tbody#dir-content
-    script.
-        window.files = !{JSON.stringify(files)};
-        window.pathExists = !{pathExists};
-        window.isDir = !{isDir};
-    script(src="/index.js") 
+
+      #context-menu.closed
+        a(href="#") open
+        a(href="#") download
+
+      script.
+          window.files = !{JSON.stringify(files)};
+          window.pathExists = !{pathExists};
+          window.isDir = !{isDir};
+      script(src="/init.js") 
+      script(src="/functions.js") 

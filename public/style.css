@@ -114,7 +114,13 @@ ul.breadcrumb li a {
 
 .file-table th:last-child {
     border-right: #C6C6C6 1px solid;
-    border-top-right-radius: 15px;
+    border-top-right-radius: 15px;   
+}
+
+.file-table th:last-child, .file-table td:last-child {
+    width: 5rem;
+    padding: 0 1rem;
+    text-align: right;
 }
 
 .file-table th, .file-table tr:not(:last-child) td {
@@ -126,5 +132,29 @@ ul.breadcrumb li a {
 }
 
 .clickable-row:hover {
+    background-color: color-mix(in srgb, #F6F5F5 97%, black);
+}
+
+#context-menu {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    height: auto;
+    width: 100px;
+    background-color: #F6F5F5;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px grey;
+    z-index: 10;
+
+}
+
+#context-menu a {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+    padding: .5rem;
+}
+
+#context-menu a:hover {
     background-color: color-mix(in srgb, #F6F5F5 97%, black);
 }

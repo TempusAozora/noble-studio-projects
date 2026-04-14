@@ -5,18 +5,26 @@ import "dotenv/config";
 const root = path.resolve(process.env.root);
 
 export function getPathInfo(req, res, next) {
-    const decoded = decodeURIComponent(req.url);
-    const workingDirectory = decoded.replace(/^\/+/, '');
-    const absPath = path.resolve(root, workingDirectory);
+    // decode spaces and other symbols in the path
+    const decoded = decodeURIComponent(req.path);
 
-    if (!absPath.startsWith(root)) throw new Error(`Unauthorized access attempt. Attempted path: ${absPath}`);
-    req.pathExists = fs.existsSync(absPath);
+    // remove "root" from path name
+    const dirs = decoded.split("/").filter(Boolean);
+    dirs.shift();
+    const rootPath = "/" + dirs.join("/");
 
+    // secure the path
+    const workingDirectory = rootPath.replace(/^\/+/, '');
+    const resolvedPath = path.resolve(root, workingDirectory);
+    if (!resolvedPath.startsWith(root)) throw new Error(`Unauthorized access attempt. Attempted path: ${resolvedPath}`);
+    
+    // check path
+    req.pathExists = fs.existsSync(resolvedPath);
     if (req.pathExists) {
-        const stat = fs.statSync(absPath);
+        const stat = fs.statSync(resolvedPath);
         req.isDir = stat.isDirectory()
         if (req.isDir)
-            req.files = fs.readdirSync(absPath, {withFileTypes: true});
+            req.files = fs.readdirSync(resolvedPath, {withFileTypes: true});
         else 
             return next();
     }

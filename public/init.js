@@ -1,14 +1,14 @@
-const path = window.location.pathname
-const directories = path.split("/").slice(1);
+const path = window.location.pathname;
+const directories = path.split("/").slice(2); // ignore 1st index and root path
 
 const icons = {
     file: `<img src="/icons/file-solid-full.svg" alt="file">`,
-    folder: `<img src="/icons/folder-solid-full.svg" alt="folder">`
+    folder: `<img src="/icons/folder-solid-full.svg" alt="folder">`,
+    ellipsis_vertical: `<img src="/icons/ellipsis-vertical-solid-full.svg" alt="folder">`
 }
 
 for (const dir of directories) {
     if (dir.trim() === "") continue;
-
     const li = document.createElement("li");
     const baseHref = path.split(`${dir}`)[0];
 
@@ -18,14 +18,19 @@ for (const dir of directories) {
     document.getElementById("dirs").appendChild(li);
 }
 
-window.files.forEach(file => {
+for (let i = 0; i < window.files.length; i++) {
+    const file = window.files[i];
+
     const tr = document.createElement("tr");
+    tr.dataset.idx = i;
+
     tr.innerHTML = `
         <td>${file.isDir ? icons.folder : icons.file}<span>${file.name}</span></td>
         <td>${(new Date(file.createdAt)).toLocaleDateString('en-US')}</td>
         <td>${(new Date(file.lastModified)).toLocaleDateString('en-US')}</td>
         <td>${!file.isDir ? file.size : "-"} ${!file.isDir? "B" : ""}</td>
         <td>${file.owner}</td>
+        <td class="details" onclick="openContextMenu(event, ${i})">${icons.ellipsis_vertical}</td>
     `
 
     tr.addEventListener('dblclick', (event) => {
@@ -33,8 +38,18 @@ window.files.forEach(file => {
         url.pathname = url.pathname.replace(/\/$/, '') + '/' + file.name;
         window.location.href = url.toString();
     })
+
+    tr.addEventListener('contextmenu', (event) => {
+        event.preventDefault();
+        openContextMenu(event, i);
+        return false;
+    })
     document.getElementById("dir-content").appendChild(tr);
-});
+}
+
+document.body.addEventListener("click", (event) => {
+    hideContextMenu(event);
+})
 
 if (!window.pathExists) {
     document.getElementById("main-tbl").innerHTML = `<h3>404 file or directory not found.</h3>`

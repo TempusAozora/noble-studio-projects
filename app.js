@@ -11,19 +11,21 @@ const app = express();
 
 app.use(express.static("public"));
 app.set('view engine', 'pug');
-app.set('views', './views');
+app.set('views', './src/views');
 
 app.get('/about', (req, res) => {
     res.redirect('/about.html');
 });
 
+app.get('/', (req, res) => {
+    res.redirect('/root/');
+})
 
-app.use(getPathInfo, (req, res, next) => {
-    if (req.url.includes('.well-known') || req.url.includes('favicon.ico')) return next();
-
+app.get('/root/{*all}', getPathInfo, (req, res, next) => {
     const files = [];
-
-    if (req.isDir && req.files) {
+    if (!req.isDir && req.query.download === 1) { // file download
+        
+    } else if (req.isDir && req.files) { // view files
         for (const file of req.files) {
             const absPath = path.join(file.parentPath, file.name);
             const fileStat = fs.statSync(absPath);
@@ -40,6 +42,10 @@ app.use(getPathInfo, (req, res, next) => {
    
     res.render("index", {files: files, pathExists: req.pathExists, isDir: req.isDir});
 });
+
+app.get('/{*all}', (req, res) => {
+    res.status(404).send("404 not found");
+})
 
 const server = http.createServer(app);
 const PORT = process.env.PORT || 3000;

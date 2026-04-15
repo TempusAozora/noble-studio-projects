@@ -1,6 +1,16 @@
 const path = window.location.pathname;
 const directories = path.split("/").slice(2); // ignore 1st index and root path
 
+function displayFileSize(size) {
+    if (size >= 1000000) {
+        return [(size/1000000).toFixed(1), "MB"]
+    } else if (size >= 1000) {
+        return [(size/1000).toFixed(1), "KB"]
+    } else {
+        return [size, "B"]
+    }
+}
+
 const icons = {
     file: `<img src="/icons/file-solid-full.svg" alt="file">`,
     folder: `<img src="/icons/folder-solid-full.svg" alt="folder">`,
@@ -24,11 +34,13 @@ for (let i = 0; i < window.files.length; i++) {
     const tr = document.createElement("tr");
     tr.dataset.idx = i;
 
+    const [fileSize, unit] = displayFileSize(file.size);
+
     tr.innerHTML = `
         <td>${file.isDir ? icons.folder : icons.file}<span>${file.name}</span></td>
         <td>${(new Date(file.createdAt)).toLocaleDateString('en-US')}</td>
         <td>${(new Date(file.lastModified)).toLocaleDateString('en-US')}</td>
-        <td>${!file.isDir ? file.size : "-"} ${!file.isDir? "B" : ""}</td>
+        <td>${!file.isDir ? fileSize : "-"} ${!file.isDir? unit : ""}</td>
         <td>${file.owner}</td>
         <td class="details">${icons.ellipsis_vertical}</td>
     `

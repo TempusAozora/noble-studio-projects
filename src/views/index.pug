@@ -10,10 +10,10 @@ html(lang="en")
       href="/style.css" 
       rel="stylesheet"
       )
-    title Aozora's Raspberry Pi
+    title Noble Studio Projects
   body
     header
-      h2 Aozora's Raspberry Pi
+      h2 Noble Studio Projects
       input(
         placeholder="Search" 
         type="text"
@@ -40,8 +40,8 @@ html(lang="en")
               tbody#dir-content
 
       #context-menu.closed
-        a(href="#") open
-        a(href="#") download
+        a#open(href="#") open
+        a#download(href="#") download
 
       script.
           window.files = !{JSON.stringify(files)};

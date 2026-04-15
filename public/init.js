@@ -30,18 +30,17 @@ for (let i = 0; i < window.files.length; i++) {
         <td>${(new Date(file.lastModified)).toLocaleDateString('en-US')}</td>
         <td>${!file.isDir ? file.size : "-"} ${!file.isDir? "B" : ""}</td>
         <td>${file.owner}</td>
-        <td class="details" onclick="openContextMenu(event, ${i})">${icons.ellipsis_vertical}</td>
+        <td class="details">${icons.ellipsis_vertical}</td>
     `
 
-    tr.addEventListener('dblclick', (event) => {
-        const url = new URL(window.location.href);
-        url.pathname = url.pathname.replace(/\/$/, '') + '/' + file.name;
-        window.location.href = url.toString();
-    })
+    tr.lastElementChild.addEventListener('click', (event) => {
+        openContextMenu(event, file);
+    });
+    tr.addEventListener('dblclick', ()=>{ openFileOrDir(file.name) });
 
     tr.addEventListener('contextmenu', (event) => {
         event.preventDefault();
-        openContextMenu(event, i);
+        openContextMenu(event, file);
         return false;
     })
     document.getElementById("dir-content").appendChild(tr);
@@ -52,7 +51,7 @@ document.body.addEventListener("click", (event) => {
 })
 
 if (!window.pathExists) {
-    document.getElementById("main-tbl").innerHTML = `<h3>404 file or directory not found.</h3>`
+    document.getElementById("main-tbl").innerHTML = `<h3>File or directory not found.</h3>`
 }
 
 if (window.pathExists && !window.isDir) {

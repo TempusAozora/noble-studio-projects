@@ -21,10 +21,8 @@ export function processPath(req, res, next) {
 
     if (fileInfo.pathExists) {
         fileInfo.stat = fs.statSync(resolvedPath);
-        if (fileInfo.stat.isDirectory())
-            fileInfo.files = fs.readdirSync(resolvedPath, {withFileTypes: true});
-        else 
-            return next();
+        if (fileInfo.stat.isDirectory()) fileInfo.files = fs.readdirSync(resolvedPath, {withFileTypes: true});
+        else return next();
     }
 
     next();

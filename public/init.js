@@ -69,3 +69,6 @@ if (!window.pathExists) {
 if (window.pathExists && !window.isDir) {
     document.getElementById("main-tbl").innerHTML = `<h3>File viewer work in progress.</h3>`
 }
+
+document.getElementById(total-storage-meter).value = window.totalStorageUsed;
+document.getElementById(total-storage-meter).max = window.totalStorage;

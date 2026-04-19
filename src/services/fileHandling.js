@@ -2,6 +2,8 @@ import AdmZip from 'adm-zip';
 import path from 'path';
 import fs from 'fs';
 import { Readable } from 'stream';
+import getFolderSize from 'get-folder-size';
+import 'dotenv/config';
 
 function recursiveAdd(zip, basePath, currentPath = basePath) {
     const entries = fs.readdirSync(currentPath, { withFileTypes: true });
@@ -45,12 +47,11 @@ export function uploadFile(req, res) {
     // Work in progress
 }
 
-export function sendPage(req, res) {
+export async function sendPage(req, res) {
     const files = [];
 
     if (!!req.fileInfo.files) { // view files
         for (const file of req.fileInfo.files) {
-            console.log(file)
             const absPath = path.join(file.path || file.parentPath, file.name);
             const fileStat = fs.statSync(absPath);
             files.push({
@@ -64,6 +65,18 @@ export function sendPage(req, res) {
         }
     }
 
+    const fileSize = await getFolderSize.loose(process.env.root);
+    const fileSizeDisplay = (fileSize / 1000 / 1000 / 1000).toFixed(2)
+
     const status = (req.fileInfo.pathExists) ? 200 : 404;
-    return res.status(status).render("index", {files: files, pathExists: req.fileInfo.pathExists, isDir: !!req.fileInfo.files});
+    return res.status(status).render("index", 
+        {
+            files: files, 
+            pathExists: req.fileInfo.pathExists, 
+            isDir: !!req.fileInfo.files,
+
+            totalStorageUsed: fileSizeDisplay,
+            totalStorage: process.env.totalStorage ? process.env.totalStorage.toFixed(2) : (0).toFixed(2)
+        }
+    );
 }

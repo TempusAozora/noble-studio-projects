@@ -3,29 +3,46 @@ html(lang="en")
   head
     meta(charset="UTF-8")
     meta(
-      content="width=device-width, initial-scale=1.0" 
-      name="viewport"
+      name="viewport" 
+      content="width=device-width, initial-scale=1.0"
       )
     link(
-      href="/style.css" 
-      rel="stylesheet"
+      rel="stylesheet" 
+      href="/style.css"
       )
     title Noble Studio Projects
   body
     header
       h2 Noble Studio Projects
       input(
-        placeholder="Search" 
-        type="text"
+        type="text" 
+        placeholder="Search"
         )
       button logout
     main
       aside
+        div
+          .storage-container#total-storage
+            meter#total-storage-meter(value=totalStorageUsed min=0 max=totalStorage)
+            p #{totalStorageUsed} GB of #{totalStorage} GB used
+          .storage-container#user-storage
+            h3(style="margin-bottom: -.3rem;") User (WIP)
+            meter#user-storage-meter(value="0")
+            p 0.00 GB of 0.00 GB used
+        .file-container
+          h3 Files (WIP)
+          ul
+            li
+              | Root
+              ul
+                li file
+                li file
+                li file
       section
         ul#dirs.breadcrumb(style="list-style: none;")
           li
             a(href="/root/") root
-        .table-wrapper#main-tbl
+        #main-tbl.table-wrapper
           table.file-table
             thead
               tr
@@ -42,10 +59,10 @@ html(lang="en")
       #context-menu.closed
         a#open(href="#") open
         a#download(href="#") download
-
+      
       script.
           window.files = !{JSON.stringify(files)};
-          window.pathExists = !{pathExists};
-          window.isDir = !{isDir};
+          window.pathExists = #{pathExists};
+          window.isDir = #{isDir};
       script(src="/init.js") 
-      script(src="/functions.js") 
+      script(src="/functions.js")

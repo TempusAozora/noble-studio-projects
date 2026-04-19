@@ -10,7 +10,7 @@ function recursiveAdd(zip, basePath, currentPath = basePath) {
     for (const entry of entries) {
         const fullPath = path.join(currentPath, entry.name);
         if (entry.isDirectory()) {
-            recursiveAdd(basePath, fullPath);
+            recursiveAdd(zip, basePath, fullPath);
         } else {
             const relativePath = path.relative(basePath, currentPath);
             zip.addLocalFile(fullPath, relativePath);

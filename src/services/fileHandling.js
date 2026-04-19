@@ -76,7 +76,7 @@ export async function sendPage(req, res) {
             isDir: !!req.fileInfo.files,
 
             totalStorageUsed: fileSizeDisplay,
-            totalStorage: process.env.totalStorage ? process.env.totalStorage.toFixed(2) : (0).toFixed(2)
+            totalStorage: process.env.totalStorage ? (process.env.totalStorage).toFixed(2) : (0).toFixed(2)
         }
     );
 }
